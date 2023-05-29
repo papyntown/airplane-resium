@@ -1,4 +1,4 @@
-import { CameraFlyTo, Entity, PointGraphics, Viewer } from "resium";
+import { CameraFlyTo, Clock, Entity, PointGraphics, Viewer } from "resium";
 import { Ion, createWorldTerrain, Cartesian3, JulianDate } from "cesium";
 import data from "./data/data.json";
 
@@ -27,30 +27,21 @@ const MapResium = () => {
     ));
     /* Initialiser l'horloge du visualiseur : */
     const timeStepInSeconds = 30; // Intervalle de temps en secondes entre chaque étape
-    const totalSeconds = timeStepInSeconds * (flightData.length - 1); // Calcul du nombre total de secondes
+    const totalSeconds = timeStepInSeconds * (data.length - 1); // Calcul du nombre total de secondes
     const start = JulianDate.fromIso8601("2020-03-09T23:10:00Z"); // Définition de la date de début
     const stop = JulianDate.addSeconds(start, totalSeconds, new JulianDate()); // Calcul de la date de fin en ajoutant les secondes au début
 
     return (
         <div>
             <Viewer terrainProvider={worldTerrain} full>
-                <Entity
-                    position={Cartesian3.fromDegrees(
-                        dataPoint.longitude,
-                        dataPoint.latitude,
-                        dataPoint.height
-                    )}>
-                    <PointGraphics pixelSize={10} />
-                    <CameraFlyTo
-                        duration={5}
-                        destination={Cartesian3.fromDegrees(
-                            dataPoint.longitude,
-                            dataPoint.latitude,
-                            dataPoint.height + 1500
-                        )}
-                    />
-                    {flightData}
-                </Entity>
+                <Clock
+                    startTime={start.clone()}
+                    stopTime={stop.clone()}
+                    currentTime={start.clone()}
+                    multiplier={50}
+                    shouldAnimate={true}
+                />
+                {flightData}
             </Viewer>
         </div>
     );
