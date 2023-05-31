@@ -15,6 +15,7 @@ import {
     TimeIntervalCollection,
     TimeInterval,
     Color,
+    VelocityOrientationProperty,
 } from "cesium";
 import data from "./data/data.json";
 
@@ -44,7 +45,15 @@ const MapResium = () => {
                 ])
             }
             position={positionProperty}
-            point={{ pixelSize: 30, color: Color.GREEN }}>
+            // point={{ pixelSize: 30, color: Color.GREEN }}
+            model={{
+                uri: "../../public/model/Cesium_Air.glb",
+                minimumPixelSize: 128,
+                maximumScale: 256,
+            }}
+            orientation={new VelocityOrientationProperty(positionProperty)}
+            tracked
+            selected>
             <PathGraphics width={3} />
         </Entity>
     );
