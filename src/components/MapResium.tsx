@@ -16,6 +16,7 @@ import {
     TimeInterval,
     Color,
     VelocityOrientationProperty,
+    IonResource,
 } from "cesium";
 import data from "./data/data.json";
 
